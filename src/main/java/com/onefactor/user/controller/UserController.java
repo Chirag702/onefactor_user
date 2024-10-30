@@ -29,11 +29,17 @@ public class UserController {
 		return validationResponse != null;
 	}
 
+	private String extractJwtToken(String token) {
+		if (token == null || !token.startsWith("Bearer ")) {
+			return null;
+		}
+		return token.substring(7); // Remove "Bearer " prefix
+	}
+
 	@PostMapping("/c")
-	public ResponseEntity<?> createUser(@RequestHeader("Authorization") String authorization,
-			@RequestBody User user) {
-System.out.println(authorization);
-		if (!isUserAuthorized(authorization)) {
+	public ResponseEntity<?> createUser(@RequestHeader("Authorization") String authorization, @RequestBody User user) {
+		System.out.println(authorization);
+		if (!isUserAuthorized(extractJwtToken(authorization))) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
 		}
 
@@ -41,10 +47,9 @@ System.out.println(authorization);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getUserById(@RequestHeader("Authorization") String authorization,
-			@PathVariable Long id) {
+	public ResponseEntity<?> getUserById(@RequestHeader("Authorization") String authorization, @PathVariable Long id) {
 
-		if (!isUserAuthorized(authorization)) {
+		if (!isUserAuthorized(extractJwtToken(authorization))) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
 		}
 
@@ -55,7 +60,7 @@ System.out.println(authorization);
 	@GetMapping("/a")
 	public ResponseEntity<?> getAllUsers(@RequestHeader("Authorization") String authorization) {
 
-		if (!isUserAuthorized(authorization)) {
+		if (!isUserAuthorized(extractJwtToken(authorization))) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
 		}
 
@@ -63,10 +68,10 @@ System.out.println(authorization);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String authorization,
-			@PathVariable Long id, @RequestBody User user) {
+	public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String authorization, @PathVariable Long id,
+			@RequestBody User user) {
 
-		if (!isUserAuthorized(authorization)) {
+		if (!isUserAuthorized(extractJwtToken(authorization))) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
 		}
 
@@ -75,10 +80,9 @@ System.out.println(authorization);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String authorization,
-			@PathVariable Long id) {
+	public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String authorization, @PathVariable Long id) {
 
-		if (!isUserAuthorized(authorization)) {
+		if (!isUserAuthorized(extractJwtToken(authorization))) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
 		}
 
