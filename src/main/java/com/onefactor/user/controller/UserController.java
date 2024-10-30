@@ -30,7 +30,7 @@ public class UserController {
 	}
 
 	@PostMapping("/c")
-	public ResponseEntity<?> createUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+	public ResponseEntity<?> createUser(@RequestHeader("Authorization") String authorization,
 			@RequestBody User user) {
 
 		if (!isUserAuthorized(authorization)) {
@@ -41,7 +41,7 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getUserById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+	public ResponseEntity<?> getUserById(@RequestHeader("Authorization") String authorization,
 			@PathVariable Long id) {
 
 		if (!isUserAuthorized(authorization)) {
@@ -53,7 +53,7 @@ public class UserController {
 	}
 
 	@GetMapping("/a")
-	public ResponseEntity<?> getAllUsers(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
+	public ResponseEntity<?> getAllUsers(@RequestHeader("Authorization") String authorization) {
 
 		if (!isUserAuthorized(authorization)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
@@ -63,7 +63,7 @@ public class UserController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+	public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String authorization,
 			@PathVariable Long id, @RequestBody User user) {
 
 		if (!isUserAuthorized(authorization)) {
@@ -75,7 +75,7 @@ public class UserController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+	public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String authorization,
 			@PathVariable Long id) {
 
 		if (!isUserAuthorized(authorization)) {
