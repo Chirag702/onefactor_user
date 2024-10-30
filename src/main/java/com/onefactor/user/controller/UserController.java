@@ -29,7 +29,7 @@ public class UserController {
 		return validationResponse != null;
 	}
 
-	@PostMapping
+	@PostMapping("/c")
 	public ResponseEntity<?> createUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
 			@RequestBody User user) {
 
@@ -52,7 +52,7 @@ public class UserController {
 		return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
 	}
 
-	@GetMapping
+	@GetMapping("/a")
 	public ResponseEntity<?> getAllUsers(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
 
 		if (!isUserAuthorized(authorization)) {
