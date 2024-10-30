@@ -32,7 +32,7 @@ public class UserController {
 	@PostMapping("/c")
 	public ResponseEntity<?> createUser(@RequestHeader("Authorization") String authorization,
 			@RequestBody User user) {
-
+System.out.println(authorization);
 		if (!isUserAuthorized(authorization)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
 		}
