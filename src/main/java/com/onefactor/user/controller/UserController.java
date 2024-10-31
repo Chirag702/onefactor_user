@@ -46,14 +46,17 @@ public class UserController {
 		return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/profile")
 	public ResponseEntity<?> getUserById(@RequestHeader("Authorization") String authorization, @PathVariable Long id) {
 
 		if (!isUserAuthorized(extractJwtToken(authorization))) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
 		}
 
-		User user = userService.getUserById(id);
+		String email=authClient.validateUser(extractJwtToken(authorization));
+		
+		
+		User user = userService.getUserByEmail(email);
 		return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
 	}
 
