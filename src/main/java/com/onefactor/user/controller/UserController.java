@@ -47,7 +47,7 @@ public class UserController {
 	}
 
 	@GetMapping("/profile")
-	public ResponseEntity<?> getUserById(@RequestHeader("Authorization") String authorization, @PathVariable Long id) {
+	public ResponseEntity<?> getUserById(@RequestHeader("Authorization") String authorization) {
 
 		if (!isUserAuthorized(extractJwtToken(authorization))) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
