@@ -53,9 +53,8 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
 		}
 
-		String email=authClient.validateUser(extractJwtToken(authorization));
-		
-		
+		String email = authClient.validateUser(extractJwtToken(authorization));
+
 		User user = userService.getUserByEmail(email);
 		return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
 	}
@@ -70,15 +69,16 @@ public class UserController {
 		return ResponseEntity.ok(userService.getAllUsers());
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String authorization, @PathVariable Long id,
-			@RequestBody User user) {
+	@PutMapping("/update")
+	public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String authorization, @RequestBody User user) {
 
 		if (!isUserAuthorized(extractJwtToken(authorization))) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
 		}
 
-		User updatedUser = userService.updateUser(id, user);
+		String email = authClient.validateUser(extractJwtToken(authorization));
+
+		User updatedUser = userService.updateUser(email, user);
 		return updatedUser != null ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
 	}
 
