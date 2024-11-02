@@ -38,9 +38,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 
-	
-	
-	
 	@Override
 	public User updateUser(String email, User user) {
 	    User existingUser = userRepository.findByEmail(email);
@@ -53,7 +50,21 @@ public class UserServiceImpl implements UserService {
 	    if (user.getIsEmailVerified() != null && user.getIsEmailVerified()) {
 	        existingUser.setIsEmailVerified(true);
 	    }
-    
+
+	    
+	    if (user.getFname() != null && user.getFname()!="") {
+	        existingUser.setFname(user.getFname());
+	    }
+	    
+	    if (user.getLname() != null && user.getLname()!="") {
+	        existingUser.setLname(user.getLname());
+	    }
+	    
+	    if (user.getGender() != null && user.getGender()!="") {
+	        existingUser.setGender(user.getGender());
+	    }
+	    
+	    
 	    return userRepository.save(existingUser);
 	}
 
