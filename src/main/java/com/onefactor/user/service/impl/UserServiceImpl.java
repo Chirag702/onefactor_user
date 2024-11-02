@@ -38,6 +38,8 @@ public class UserServiceImpl implements UserService {
 	public User updateUser(String email, User user) {
 		User existingUser = userRepository.findByEmail(email);
 
+		
+		user.setId(existingUser.getId());
 		if (user.isEmailVerified()) {
 			existingUser.setEmailVerified(true);
 		}
