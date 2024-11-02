@@ -3,6 +3,9 @@ package com.onefactor.user.service.impl;
 import com.onefactor.user.entity.User;
 import com.onefactor.user.repository.UserRepository;
 import com.onefactor.user.service.UserService;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,17 +37,26 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll();
 	}
 
+
+	
+	
+	
 	@Override
 	public User updateUser(String email, User user) {
-		User existingUser = userRepository.findByEmail(email);
+	    User existingUser = userRepository.findByEmail(email);
+	    
+	    if (existingUser == null) {
+	        throw new EntityNotFoundException("User with email " + email + " not found.");
+	    }
 
-		
-		user.setId(existingUser.getId());
-		if (user.isEmailVerified()) {
-			existingUser.setEmailVerified(true);
-		}
-		return userRepository.save(user);
+	    // Update only the fields that are needed
+	    if (user.getIsEmailVerified() != null && user.getIsEmailVerified()) {
+	        existingUser.setIsEmailVerified(true);
+	    }
+    
+	    return userRepository.save(existingUser);
 	}
+
 
 	@Override
 	public void deleteUser(Long id) {
