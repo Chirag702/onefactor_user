@@ -64,8 +64,8 @@ public class User {
 	
 	private String phone;
 	
-	private Boolean isEmailVerified;
+	private Boolean isEmailVerified = false;
 	
-	private Boolean isPhoneVerified;
+	private Boolean isPhoneVerified	= false;
 	
 }
