@@ -40,8 +40,8 @@ public class UserServiceImpl implements UserService {
 
 		
 		user.setId(existingUser.getId());
-		if (user.isEmailVerified()) {
-			existingUser.setEmailVerified(true);
+		if (user.getIsEmailVerified()) {
+			existingUser.setIsEmailVerified(true);
 		}
 		return userRepository.save(user);
 	}
