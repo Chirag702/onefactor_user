@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "onefactor-auth", url = "http://onefactor.in:8085")
+@FeignClient(name = "onefactor-auth", url = "")
 public interface AuthClient {
 
 	@GetMapping("/auth/validate")
